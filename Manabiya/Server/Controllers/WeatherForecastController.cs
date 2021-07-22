@@ -1,4 +1,4 @@
-﻿using Manabiya.Shared;
+﻿using Marimo.Manabiya.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
