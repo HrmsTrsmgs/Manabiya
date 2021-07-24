@@ -11,37 +11,37 @@ namespace Marimo.Manabiya.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class 講義Controller : ControllerBase
+    public class 勉強会テーマController : ControllerBase
     {
-        static Dictionary<int, 講義> データ { get; } = new Dictionary<int, 講義>();
+        static Dictionary<int, 勉強会テーマ> データ { get; } = new Dictionary<int, 勉強会テーマ>();
 
-        // GET: <講義Controller>
+        // GET: <勉強会テーマController>
         [HttpGet]
-        public IEnumerable<講義> Get() => データ.Values;
+        public IEnumerable<勉強会テーマ> Get() => データ.Values;
 
-        // GET <講義Controller>/5
+        // GET <勉強会テーマController>/5
         [HttpGet("{id}")]
-        public 講義 Get(int id) =>
+        public 勉強会テーマ Get(int id) =>
             データ.ContainsKey(id)
             ? データ[id]
             : null;
 
 
-        // POST <講義Controller>
+        // POST <勉強会テーマController>
         [HttpPost]
-        public void Post([FromBody] 講義 value)
+        public void Post([FromBody] 勉強会テーマ value)
         {
             Put(value);
         }
 
-        // PUT <講義Controller>
+        // PUT <勉強会テーマController>
         [HttpPut]
-        public void Put([FromBody] 講義 value)
+        public void Put([FromBody] 勉強会テーマ value)
         {
             データ[value.Id] = value;
         }
 
-        // DELETE <講義Controller>/5
+        // DELETE <勉強会テーマController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

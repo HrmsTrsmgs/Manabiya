@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Marimo.Manabiya.Shared
 {
-    public class 講義
+    public class 勉強会テーマ
     {
         public int Id { get; init; }
         public string タイトル { get; set; }
