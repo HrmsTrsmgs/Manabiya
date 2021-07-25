@@ -31,7 +31,7 @@ namespace Marimo.Manabiya.Server.Controllers
         [HttpPost]
         public void Post([FromBody] 勉強会 value)
         {
-            Put(value);
+            Put(new 勉強会{ Id = データ.Any() ? データ.Keys.Max() + 1 : 0, 名称 = value.名称 });
         }
 
         // PUT <勉強会Controller>

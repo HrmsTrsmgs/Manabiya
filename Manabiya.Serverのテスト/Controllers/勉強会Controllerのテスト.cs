@@ -3,6 +3,7 @@ using System;
 using Xunit;
 using FluentAssertions;
 using Marimo.Manabiya.Shared;
+using System.Linq;
 
 namespace Marimo.Manabiya.Test.Server.Controllers
 {
@@ -13,7 +14,7 @@ namespace Marimo.Manabiya.Test.Server.Controllers
 
         public 勉強会Controllerのテスト()
         {
-            foreach(var data in テスト対象.Get())
+            foreach (var data in テスト対象.Get())
             {
                 テスト対象.Delete(data.Id);
             }
@@ -26,7 +27,7 @@ namespace Marimo.Manabiya.Test.Server.Controllers
         }
 
         [Fact]
-        public void Getで挿入した勉強会が取得できます()
+        public void Getで挿入した勉強会テーマが取得できます()
         {
             var 勉強会 = new 勉強会 { Id = 0 };
             テスト対象.Put(勉強会);
@@ -37,7 +38,7 @@ namespace Marimo.Manabiya.Test.Server.Controllers
         }
 
         [Fact]
-        public void Getで挿入した勉強会が全て取得できます()
+        public void Getで挿入した勉強会テーマが全て取得できます()
         {
             var 勉強会0 = new 勉強会 { Id = 0 };
             テスト対象.Put(勉強会0);
@@ -52,7 +53,7 @@ namespace Marimo.Manabiya.Test.Server.Controllers
         }
 
         [Fact]
-        public void Getでidを指定して勉強会が全て取得できます()
+        public void Getでidを指定して勉強会テーマが全て取得できます()
         {
             var 勉強会0 = new 勉強会 { Id = 0 };
             テスト対象.Put(勉強会0);
@@ -74,23 +75,29 @@ namespace Marimo.Manabiya.Test.Server.Controllers
         }
 
         [Fact]
-        public void Postで挿入ができます()
+        public void Postで最初の要素はidを0にして挿入ができます()
         {
-            テスト対象.Post(new 勉強会 { Id = 0 });
+            テスト対象.Post(new 勉強会 { Id = 100 });
 
-            テスト対象.Get().Should().HaveCount(1);
+            var 結果 = テスト対象.Get();
+            結果.Should().HaveCount(1);
+            結果.ElementAt(0).Id.Should().Be(0);
         }
 
         [Fact]
-        public void Putで挿入ができます()
+        public void Postでidは自動で採番されます()
         {
-            テスト対象.Put(new 勉強会 { Id = 0 });
+            テスト対象.Post(new 勉強会 { Id = 100 });
+            テスト対象.Post(new 勉強会 { Id = 100 });
 
-            テスト対象.Get().Should().HaveCount(1);
+            var 結果 = テスト対象.Get();
+            結果.Should().HaveCount(2);
+            結果.Should().ContainSingle(x => x.Id == 0);
+            結果.Should().ContainSingle(x => x.Id == 1);
         }
 
         [Fact]
-        public void Putでidが同じ勉強会を挿入すると上書きされます()
+        public void Putでidが同じ勉強会テーマを更新すると上書きされます()
         {
             テスト対象.Put(new 勉強会 { Id = 0 });
             var 勉強会0 = new 勉強会 { Id = 0 };
@@ -102,7 +109,15 @@ namespace Marimo.Manabiya.Test.Server.Controllers
         }
 
         [Fact]
-        public void Deleteで指定したidの勉強会が削除されます()
+        public void Putで挿入ができます()
+        {
+            テスト対象.Put(new 勉強会 { Id = 0 });
+
+            テスト対象.Get().Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Deleteで指定したidの勉強会テーマが削除されます()
         {
             var 勉強会0 = new 勉強会 { Id = 0 };
             テスト対象.Put(勉強会0);

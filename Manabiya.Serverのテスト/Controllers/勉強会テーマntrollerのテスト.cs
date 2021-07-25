@@ -3,6 +3,7 @@ using System;
 using Xunit;
 using FluentAssertions;
 using Marimo.Manabiya.Shared;
+using System.Linq;
 
 namespace Marimo.Manabiya.Test.Server.Controllers
 {
@@ -74,23 +75,29 @@ namespace Marimo.Manabiya.Test.Server.Controllers
         }
 
         [Fact]
-        public void Postで挿入ができます()
+        public void Postで最初の要素はidを0にして挿入ができます()
         {
-            テスト対象.Post(new 勉強会テーマ { Id = 0 });
+            テスト対象.Post(new 勉強会テーマ { Id = 100 });
 
-            テスト対象.Get().Should().HaveCount(1);
+            var 結果 = テスト対象.Get();
+            結果.Should().HaveCount(1);
+            結果.ElementAt(0).Id.Should().Be(0);
         }
 
         [Fact]
-        public void Putで挿入ができます()
+        public void Postでidは自動で採番されます()
         {
-            テスト対象.Put(new 勉強会テーマ { Id = 0 });
+            テスト対象.Post(new 勉強会テーマ { Id = 100 });
+            テスト対象.Post(new 勉強会テーマ { Id = 100 });
 
-            テスト対象.Get().Should().HaveCount(1);
+            var 結果 = テスト対象.Get();
+            結果.Should().HaveCount(2);
+            結果.Should().ContainSingle(x => x.Id == 0);
+            結果.Should().ContainSingle(x => x.Id == 1);
         }
 
         [Fact]
-        public void Putでidが同じ勉強会テーマを挿入すると上書きされます()
+        public void Putでidが同じ勉強会テーマを更新すると上書きされます()
         {
             テスト対象.Put(new 勉強会テーマ { Id = 0 });
             var 勉強会テーマ0 = new 勉強会テーマ { Id = 0 };
@@ -99,6 +106,14 @@ namespace Marimo.Manabiya.Test.Server.Controllers
             var 結果 = テスト対象.Get();
             結果.Should().HaveCount(1);
             結果.Should().ContainSingle(x => x == 勉強会テーマ0);
+        }
+
+        [Fact]
+        public void Putで挿入ができます()
+        {
+            テスト対象.Put(new 勉強会テーマ { Id = 0 });
+
+            テスト対象.Get().Should().HaveCount(1);
         }
 
         [Fact]
