@@ -1,0 +1,36 @@
+﻿@page "/予定"
+@using Marimo.Manabiya.Shared
+@inject HttpClient Http
+
+<h1>今後の予定</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (予定一覧 == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{   
+    <button @onclick="追加">+</button>
+    @foreach (var 各予定 in 予定一覧)
+    {
+        <div>@各予定.タイトル</div>
+    }
+}
+
+@code {
+    private 勉強会テーマ[] 予定一覧;
+
+    protected override async Task OnInitializedAsync()
+    {
+        予定一覧 = await Http.GetFromJsonAsync<勉強会テーマ[]>("勉強会テーマ");
+    }
+
+    async Task 追加()
+    {
+        await Http.PostAsJsonAsync("勉強会テーマ", new 勉強会テーマ { タイトル = "ABC" });
+        await OnInitializedAsync();
+    }
+
+}
