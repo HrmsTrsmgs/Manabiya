@@ -1,5 +1,6 @@
 ﻿@page "/予定"
 @using Marimo.Manabiya.Shared
+@using BlazorFluentUI
 @inject HttpClient Http
 
 <h1>今後の予定</h1>
@@ -11,16 +12,18 @@
     <p><em>Loading...</em></p>
 }
 else
-{   
-    <button @onclick="追加">+</button>
+{
+    <ActionButton IconName="Add" @onclick="追加">
+        新規追加
+    </ActionButton>
     @foreach (var 各予定 in 予定一覧)
     {
-        <div>@各予定.タイトル</div>
+    <div>@各予定.タイトル</div>
     }
-}
+    }
 
-@code {
-    private 勉強会テーマ[] 予定一覧;
+    @code {
+private 勉強会テーマ[] 予定一覧;
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,4 +36,4 @@ else
         await OnInitializedAsync();
     }
 
-}
+    }
