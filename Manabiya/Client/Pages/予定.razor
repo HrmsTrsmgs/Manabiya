@@ -1,65 +1,56 @@
 ﻿@page "/予定"
 @using Marimo.Manabiya.Shared
+@using Marimo.Manabiya.Client.ViewModels
 @using BlazorFluentUI
-@inject HttpClient Http
-
+@inject 予定PageViewModel vm
 <h1>今後の予定</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (予定一覧 == null)
+@if (vm.予定一覧 == null)
 {
     <Spinner Size=@SpinnerSize.Large Label="Loading" />
 }
 else
 {
-    <ActionButton IconName="Add" OnClick=@(_=> isダイアログ表示中=true)>
+    <ActionButton IconName="add"
+                  Command="vm.ダイアログの表示を切り替える"
+                  CommandParameter=true>
         新規追加
     </ActionButton>
-    
-        <Dialog Title="登録"
-                IsOpen=@isダイアログ表示中
-                IsBlocking=true
-                OnDismiss=@(_=> isダイアログ表示中=false )>
-            <ChildContent>
-                <EditForm Model=@新規テーマ OnValidSubmit="追加" id="新規フォーム">
-                    <DataAnnotationsValidator />
-                    <FluentUIValidationSummary />
-                    <TextField Required=true @bind-Value="新規テーマ.タイトル" />
-                </EditForm>
-            </ChildContent>
-            <FooterTemplate>
-                <SubmitButton Text="OK" form="新規フォーム" />
-                <DefaultButton Text="キャンセル" OnClick=@(_=> isダイアログ表示中=false) />
-            </FooterTemplate>
-        </Dialog>
-    
-    @foreach (var 各予定 in 予定一覧)
+
+    <Dialog Title="登録"
+            IsOpen=@vm.isダイアログ表示中
+            IsBlocking=true
+            OnDismiss=@(_ => vm.ダイアログの表示を切り替える.Execute(false) )>
+        <ChildContent>
+            <EditForm id="新規フォーム"
+                      Model=@vm.新規テーマ
+                      OnValidSubmit=@(async _ => await vm.追加するCommand.ExecuteAsync(null))>
+                <DataAnnotationsValidator />
+                <FluentUIValidationSummary />
+                <TextField Required=true @bind-Value=@vm.新規テーマ.タイトル />
+            </EditForm>
+        </ChildContent>
+        <FooterTemplate>
+            <SubmitButton Text="OK" form="新規フォーム" />
+            <DefaultButton Text="キャンセル"
+                           Command="vm.ダイアログの表示を切り替える" 
+                           CommandParameter=false />
+        </FooterTemplate>
+    </Dialog>
+
+    @foreach (var 各予定 in vm.予定一覧)
     {
         <div>@各予定.タイトル</div>
     }
 }
 
 @code {
-
-    bool isダイアログ表示中 = false;
-
-    勉強会テーマ 新規テーマ = new();
-
-    勉強会テーマ[] 予定一覧;
-
     protected override async Task OnInitializedAsync()
     {
-        予定一覧 = await Http.GetFromJsonAsync<勉強会テーマ[]>("勉強会テーマ");
+        await vm.予定一覧を読み込むCommand.ExecuteAsync(null);
+        await base.OnInitializedAsync();
+        vm.PropertyChanged += (_, _) => StateHasChanged();
     }
-
-    async Task 追加()
-    {
-        await Http.PostAsJsonAsync("勉強会テーマ", 新規テーマ);
-        新規テーマ = new();
-        isダイアログ表示中 = false;
-
-        await OnInitializedAsync();
-    }
-
 }
