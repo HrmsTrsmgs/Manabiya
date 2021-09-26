@@ -16,12 +16,12 @@ namespace Marimo.Manabiya.Client
     {
         public static async Task Main(string[] args)
         {
-            
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             builder.Services.AddBlazorFluentUI();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddScoped<—\’èPageViewModel, —\’èPageViewModel>();
+            builder.Services.AddScoped<—\’èPageViewModel>();
+            builder.Services.AddScoped<Web’ÊM>();
             await builder.Build().RunAsync();
         }
     }

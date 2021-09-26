@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manabiya.Shared", "Manabiya
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manabiya.Serverのテスト", "Manabiya.Serverのテスト\Manabiya.Serverのテスト.csproj", "{A6E1FE93-F09E-4536-A412-F0F9DB0DE18C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manabiya.Clientのテスト", "Manabiya.Clientのテスト\Manabiya.Clientのテスト.csproj", "{66C7EB02-F5F4-420F-894E-EA010F9B7FDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A6E1FE93-F09E-4536-A412-F0F9DB0DE18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6E1FE93-F09E-4536-A412-F0F9DB0DE18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6E1FE93-F09E-4536-A412-F0F9DB0DE18C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66C7EB02-F5F4-420F-894E-EA010F9B7FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C7EB02-F5F4-420F-894E-EA010F9B7FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C7EB02-F5F4-420F-894E-EA010F9B7FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C7EB02-F5F4-420F-894E-EA010F9B7FDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

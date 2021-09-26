@@ -14,15 +14,15 @@
 else
 {
     <ActionButton IconName="add"
-                  Command="vm.ダイアログの表示を切り替える"
+                  Command="vm.ダイアログの表示を切り替えるCommand"
                   CommandParameter=true>
         新規追加
     </ActionButton>
 
     <Dialog Title="登録"
-            IsOpen=@vm.isダイアログ表示中
+            IsOpen=@vm.Isダイアログ表示中
             IsBlocking=true
-            OnDismiss=@(_ => vm.ダイアログの表示を切り替える.Execute(false) )>
+            OnDismiss=@(_ => vm.ダイアログの表示を切り替えるCommand.Execute(false) )>
         <ChildContent>
             <EditForm id="新規フォーム"
                       Model=@vm.新規テーマ
@@ -35,7 +35,7 @@ else
         <FooterTemplate>
             <SubmitButton Text="OK" form="新規フォーム" />
             <DefaultButton Text="キャンセル"
-                           Command="vm.ダイアログの表示を切り替える" 
+                           Command="vm.ダイアログの表示を切り替えるCommand" 
                            CommandParameter=false />
         </FooterTemplate>
     </Dialog>

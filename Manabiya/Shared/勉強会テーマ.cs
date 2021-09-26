@@ -11,7 +11,7 @@ namespace Marimo.Manabiya.Shared
     {
         public int Id { get; init; }
 
-        [Required(ErrorMessage ="タイトルを入力してください。")]
-        public string タイトル { get; set; }
+        [Required(ErrorMessage = "タイトルを入力してください。")]
+        public string タイトル { get; set; } = "";
     }
 }
